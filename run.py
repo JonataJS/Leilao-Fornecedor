@@ -2,10 +2,12 @@
 from flask import Flask, url_for, render_template, send_from_directory
 import jinja2.exceptions
 from model.fake_lic import *
+from model.fake_fab import *
 
 
 app = Flask(__name__)
-f = Fake_Lic()
+fl = Fake_Lic()
+fb = Fake_Fab()
 
 @app.route('/')
 def index():
@@ -14,7 +16,11 @@ def index():
 
 @app.route('/get_lic', methods=['GET'])
 def get_license():
-    return f.get_json()
+    return fl.get_json()
+
+@app.route('/get_fab', methods=['GET'])
+def get_fabricante():
+    return fb.get_json()
 
 @app.route('/<pagename>')
 def admin(pagename):
