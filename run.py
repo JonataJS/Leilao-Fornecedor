@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 from flask import Flask, url_for, render_template, send_from_directory
 import jinja2.exceptions
+from model.fake_lic import *
+
 
 app = Flask(__name__)
+f = Fake_Lic()
+
 @app.route('/')
 def index():
     return render_template('login.html')
+
+
+@app.route('/get_lic', methods=['GET'])
+def get_license():
+    return f.get_json()
 
 @app.route('/<pagename>')
 def admin(pagename):
