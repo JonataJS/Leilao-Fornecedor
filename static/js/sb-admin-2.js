@@ -18,6 +18,7 @@ function make_lic_table(){
         {title: "ID"},
         { title: "Requerente" },
         { title: "Produtos" },
+        {title: "Fornecedor Atual"},
         { title: "Menor Lance" },
         {title: "Inicio"},
         { title: "Fim"}
@@ -26,6 +27,7 @@ function make_lic_table(){
 get_default('/get_lic', fill_lic)
 }
 function fill_lic(data){
+    console.log(data)
   for(result in data){
       x = data[result]
       prod = "Nome \n  Qtd  <br>"
@@ -37,7 +39,7 @@ function fill_lic(data){
     }
 
       window.tableLic.row.add(
-      [x.id, x.applicant, prod, x.value,x.start_date, x.end_date])
+      [x.id, x.applicant, prod, x.lowestBid.supplier ,x.lowestBid.value ,x.start_date, x.end_date])
       window.tableLic.draw()
     }
   }

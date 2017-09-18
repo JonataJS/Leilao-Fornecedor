@@ -5,10 +5,9 @@ import os
 from model.fake_lic import *
 from model.fake_fab import *
 from db.orm import *
-
+import requests
 
 app = Flask(__name__)
-fl = Fake_Lic()
 fb = Fake_Fab()
 orm = Orm()
 
@@ -19,7 +18,9 @@ def index():
 
 @app.route('/get_lic', methods=['GET'])
 def get_license():
-    return fl.get_json()
+    r = requests.get('http://athena-ine5646.herokuapp.com/api').content
+    print (r)
+    return r
 
 @app.route('/get_fab', methods=['GET'])
 def get_fabricante():
