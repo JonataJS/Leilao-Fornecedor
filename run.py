@@ -5,7 +5,6 @@ import os
 from model.fake_lic import *
 from model.fake_fab import *
 
-
 app = Flask(__name__)
 fl = Fake_Lic()
 fb = Fake_Fab()
@@ -13,7 +12,6 @@ fb = Fake_Fab()
 @app.route('/')
 def index():
     return render_template('login.html')
-
 
 @app.route('/get_lic', methods=['GET'])
 def get_license():
@@ -29,12 +27,15 @@ def admin(pagename):
 
 @app.route('/<path:resource>')
 def serveStaticResource(resource):
-	return send_from_directory('static/', resource)
+    return send_from_directory('static/', resource)
 
 @app.errorhandler(404)
 def not_found(e):
     return '<strong>Page Not Found!</strong>', 404
 
 if __name__ == '__main__':
-        port = int(os.environ.get("PORT", 5000))
-        app.run(host='0.0.0.0', port=port)
+    try:
+	port = int(os.environ.get("PORT", 5000))
+	app.run(host='0.0.0.0', port=port)
+    except KeyboardInterrupt:
+	raise SystemExit
