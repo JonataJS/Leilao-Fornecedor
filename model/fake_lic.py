@@ -8,10 +8,9 @@ class Fake_Lic():
 
     def start_lic(self):
         self.lic =[
-        {"bidding":1,"date":"13/09/2017","supplier":"Odebretch","value":550000, "produto": "Monitor"},
-        {"bidding":1,"date":"14/09/2017","supplier":"W Koerich","value":450000, "produto": "Armario"},
-        {"bidding":2,"date":"14/09/2017","supplier":"Seu Ze","value":20000, "produto": "Mesa"},
-        {"bidding":2,"date":"14/09/2017","supplier":"Illuminati","value":19000, "produto": "Cadeira"}]
+        {"id":1,"name":"Material para restauração da ponte","value": 5000 ,"applicant":"Prefeitura de Florianópolis","status":1,"start_date":"12/09/2017","end_date":"10/01/2018","products":[{"product_name":"Cimento (1kg)","product_id":"59bd6da9b4e2250012a99627","quantity":20},{"product_name":"Cadeira","product_id":"59bc25fd871a1a00127e86b9","quantity":1000}]},
+        {"id":2,"name":"Papel para o banheiro do CTC", "value": 2000, "applicant":"Universidade Federal de Santa Catarina","status":1,"start_date":"17/09/2017","end_date":"22/02/2018","products":[{"product_name":"Papel Higiênico (6 unidades)","product_id":"59bed804c5c22800120f3e2c","quantity":200}]}
+        ]
 
 
         # self.lic = {

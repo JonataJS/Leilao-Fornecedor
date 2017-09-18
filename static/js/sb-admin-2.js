@@ -15,9 +15,11 @@ function make_lic_table(){
     order: [[0, 'desc']],
     buttons: ['copy', 'excel', 'pdf'],
     columns: [
+        {title: "ID"},
         { title: "Requerente" },
         { title: "Produtos" },
         { title: "Menor Lance" },
+        {title: "Inicio"},
         { title: "Fim"}
     ]
   });
@@ -26,8 +28,16 @@ get_default('/get_lic', fill_lic)
 function fill_lic(data){
   for(result in data){
       x = data[result]
+      prod = "Nome \n  Qtd  <br>"
+      for(f in x.products){
+        console.log(f)
+        prod = prod + x.products[f].product_name
+        prod = prod + x.products[f].quantity + "<br>"
+
+    }
+
       window.tableLic.row.add(
-        [x.supplier, x.produto, x.value, x.date])
+      [x.id, x.applicant, prod, x.value,x.start_date, x.end_date])
       window.tableLic.draw()
     }
   }
@@ -41,8 +51,9 @@ function make_fab_table(){
       columns: [
           { title: "ID" },
           { title: "Nome" },
-          { title: "Produtos",defaultContent: "<a href='' name='ver_resultados' class='show'> <i class = 'fa fa-eye fa-4' style='color:#696969' ></i> </a> ",width: 1 },
-          { title: "produtos_html", "visible":false}
+          {title: "Produtos"}
+      // { title: "Produtos",defaultContent: "<a href='' name='ver_resultados' class='show'> <i class = 'fa fa-eye fa-4' style='color:#696969' ></i> </a> ",width: 1 },
+       //   { title: "produtos_html", "visible":false}
       ]
     });
   get_default('/get_fab', fill_fab)
@@ -51,8 +62,15 @@ function make_fab_table(){
 function fill_fab(data){
   for(result in data){
     x = data[result]
+    prod = "[Nome     Valor]  <br>"
+    for(f in x.produtos){
+        console.log(f)
+        prod = prod + x.produtos[f].nome + "\n"
+        prod = prod + x.produtos[f].custo + "<br>"
+
+    }
     window.tableFab.row.add(
-      [x.id, x.nome,,x.produtos[0].nome.toString()]
+      [x.id, x.nome,prod]
     )
     window.tableFab.draw()
   }

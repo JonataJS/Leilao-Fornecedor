@@ -4,14 +4,18 @@ import jinja2.exceptions
 import os
 from model.fake_lic import *
 from model.fake_fab import *
+from db.orm import *
+
 
 app = Flask(__name__)
 fl = Fake_Lic()
 fb = Fake_Fab()
+orm = Orm()
 
 @app.route('/')
 def index():
     return render_template('login.html')
+
 
 @app.route('/get_lic', methods=['GET'])
 def get_license():
@@ -21,13 +25,19 @@ def get_license():
 def get_fabricante():
     return fb.get_json()
 
+
+#TODO post forn
+@app.route('/get_forn', methods=['GET'])
+def get_fornecedor():
+	return orm.get_json_forns()
+
 @app.route('/<pagename>')
 def admin(pagename):
     return render_template(pagename+'.html')
 
 @app.route('/<path:resource>')
 def serveStaticResource(resource):
-    return send_from_directory('static/', resource)
+	return send_from_directory('static/', resource)
 
 @app.errorhandler(404)
 def not_found(e):
