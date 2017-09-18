@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, url_for, render_template, send_from_directory
 import jinja2.exceptions
+import os
 from model.fake_lic import *
 from model.fake_fab import *
 
@@ -35,4 +36,5 @@ def not_found(e):
     return '<strong>Page Not Found!</strong>', 404
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5000 ,debug=True)
+        port = int(os.environ.get("PORT", 5000))
+        app.run(host='0.0.0.0', port=port)
