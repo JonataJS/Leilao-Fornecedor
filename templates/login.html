@@ -21,38 +21,64 @@
 </head>
 <body>
 
-<div class="row">
-    <div class="container">
-        <div class="row offset-md-4">
-            <div class="col-md-6 ">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <a href="/index" class="btn btn-lg btn-success btn-block">Login</a>
-                            </fieldset>
-                        </form>
+    <div class="row">
+        <div class="container">
+            <div class="row offset-md-4">
+                <div class="col-md-6 ">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Please Sign In</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        </label>
+                                    </div>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <a href="/index" class="btn btn-lg btn-success btn-block">Login</a>
+                                    <html lang="en">
+                                    <br>
+                                    <head>
+                                        <meta name="google-signin-scope" content="profile email">
+                                        <meta name="google-signin-client_id" content="257527660192-dcf54n6clou82qnjncf8oi7iuh8nbmht.apps.googleusercontent.com">
+                                        <script src="https://apis.google.com/js/platform.js" async defer></script>
+                                    </head>
+                                    <body>
+                                        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                                        <script>
+                                        function onSignIn(googleUser) {
+                                            // Useful data for your client-side scripts:
+                                            var profile = googleUser.getBasicProfile();
+                                            // console.log("IDr " + profile.getId()); // Don't send this directly to your server!
+                                            // console.log('Full Name: ' + profile.getName());
+                                            // console.log('Given Name: ' + profile.getGivenName());
+                                            // console.log('Family Name: ' + profile.getFamilyName());
+                                            // console.log("Image URL: " + profile.getImageUrl());
+                                            // console.log("Email: " + profile.getEmail());
+
+                                            // The ID token you need to pass to your backend:
+                                            var id_token = googleUser.getAuthResponse().id_token;
+                                            // console.log("ID Token: " + id_token);
+                                        };
+                                        </script>
+                                    </body>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <!-- jQuery -->
     <script src="../static/js/jquery.min.js"></script>
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, url_for, render_template, send_from_directory
+from flask import Flask, url_for, render_template, send_from_directory, jsonify, request
 import jinja2.exceptions
 import os
 from model.fake_lic import *
@@ -19,7 +19,6 @@ def index():
 @app.route('/get_lic', methods=['GET'])
 def get_license():
     r = requests.get('http://athena-ine5646.herokuapp.com/api').content
-    print (r)
     return r
 
 @app.route('/get_fab', methods=['GET'])
@@ -31,6 +30,18 @@ def get_fabricante():
 @app.route('/get_forn', methods=['GET'])
 def get_fornecedor():
 	return orm.get_json_forns()
+
+@app.route('/send_bid', methods=['POST'])
+def send_lance():
+    lance = dict(request.get_json(force=False))
+    lance["bidding"] = int(lance["bidding"])
+    lance["value"] = int(lance["value"])
+    print(lance)
+    lance = json.dumps(lance)
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    response = requests.post("https://athena-ine5646.herokuapp.com/api/bids", data=lance, headers=headers)
+    print(response)
+    return str(response)
 
 @app.route('/<pagename>')
 def admin(pagename):
