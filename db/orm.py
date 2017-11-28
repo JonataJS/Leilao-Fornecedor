@@ -9,8 +9,12 @@ class Orm():
         pass
 
     def crt_tables(self):
-        db.create_tables([Fornecedor])
+        db.create_tables([Fornecedor,Licitacao])
 
+    def crt_table_lic(self):
+        db.create_tables([Licitacao])
+
+#Fornecedor
     def crt_forn(self,params=None):
         if not params:
             forn = Fornecedor.create()
@@ -45,6 +49,45 @@ class Orm():
         while self.get_forn(x) != None:
             atual = model_to_dict(Fornecedor.get(id=x))
             del atual['passwd']
+            dic.append(atual)
+            x+=1
+
+        return json.dumps(dic)
+
+#Licitacao
+    def crt_lic(self,params=None):
+        if not params:
+            lic = Licitacao.create()
+            return lic
+
+        t = dict_to_model(Licitacao, params, ignore_unknown=True)
+        t.save()
+        return t
+
+
+    def get_lic(self,x):
+        try:
+            return Licitacao.get(id=x)
+        except:
+            return None
+
+    def del_lic(self):
+        t = Licitacao.delete()
+        t.execute()
+
+    def get_lics(self):
+        dic = []
+        x = 1
+        while self.get_lic(x) != None:
+            dic.append(model_to_dict(Licitacao.get(id=x)))
+            x+=1
+        return dic
+
+    def get_json_lic(self):
+        dic = []
+        x = 1
+        while self.get_lic(x) != None:
+            atual = model_to_dict(Licitacao.get(id=x))
             dic.append(atual)
             x+=1
 

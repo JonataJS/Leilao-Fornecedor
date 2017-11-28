@@ -22,7 +22,11 @@ class Fake_Fab():
                                 {
                                 "nome": "Monitor",
                                 "custo": 300}
-                                ]}]
+                                ]},
+                    {
+                        "Active" : False
+                    }
+                    ]
 
 
     def get_json(self):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, url_for, render_template, send_from_directory, jsonify, request
+from flask import Flask, url_for, render_template, send_from_directory
 import jinja2.exceptions
 import os
 from model.fake_lic import *
@@ -19,29 +19,45 @@ def index():
 @app.route('/get_lic', methods=['GET'])
 def get_license():
     r = requests.get('http://athena-ine5646.herokuapp.com/api').content
-    return r
+    if "id" in str(r):
+        my_json = r.decode('utf8').replace("'", '"')
+        my_dict = json.loads(my_json)
+        orm.del_lic()
+        for dic in my_dict:
+            lic = {}
+            try:
+                lic["applicant"] = dic["applicant"]
+                lic["supplier"] = dic["lowestBid"]["supplier"]
+                lic["end_date"] = dic["end_date"]
+                lic["lowest_bid"] = dic["lowestBid"]["value"]
+                lic["start_date"] = dic["start_date"]
+                lic["products"] = ""
+                product = ""
+                for x in range (0,len(dic["products"])):
+                    produtos = dic["products"][x]
+                    print(produtos["quantity"])
+                    product = product + produtos["product_name"] + " "
+                    product = product + str(produtos["quantity"]) + "<br>"
+
+                lic["products"] = product
+                orm.crt_lic(lic)
+            except:
+                pass
+        return r
+    else:
+        return orm.get_json_lic()
 
 @app.route('/get_fab', methods=['GET'])
 def get_fabricante():
-    return fb.get_json()
+    try:
+        r = requests.get('webg4r2.gustavo.roesler.brillinger.vms.ufsc.br:1234/api/open/fabricantes').content
+        return r
+    except:
+            return fb.get_json()
 
-
-#TODO post forn
 @app.route('/get_forn', methods=['GET'])
 def get_fornecedor():
 	return orm.get_json_forns()
-
-@app.route('/send_bid', methods=['POST'])
-def send_lance():
-    lance = dict(request.get_json(force=False))
-    lance["bidding"] = int(lance["bidding"])
-    lance["value"] = int(lance["value"])
-    print(lance)
-    lance = json.dumps(lance)
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    response = requests.post("https://athena-ine5646.herokuapp.com/api/bids", data=lance, headers=headers)
-    print(response)
-    return str(response)
 
 @app.route('/<pagename>')
 def admin(pagename):

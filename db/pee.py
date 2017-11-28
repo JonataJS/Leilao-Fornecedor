@@ -1,5 +1,5 @@
 from peewee import *
-db = SqliteDatabase('fornecedor.db')
+db = SqliteDatabase('licitacao.db')
 db.connect()
 
 class BaseModel(Model):
@@ -10,3 +10,11 @@ class Fornecedor(BaseModel):
     name = CharField()
     email = CharField()
     passwd = CharField()
+
+class Licitacao(BaseModel):
+    applicant = CharField()
+    supplier = CharField()
+    lowest_bid = IntegerField()
+    products = CharField()
+    start_date = CharField()
+    end_date = CharField()
